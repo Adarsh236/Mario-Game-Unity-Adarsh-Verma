@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Adars\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Adars\.Rider2019.3\system\resharper-host\Local\Transient\ReSharperHost\v193\SolutionCaches\_MarioBros.-395220641.00" t="ExcludeRecursive" />
+    <e p="C:\Users\Adarsh\OneDrive\Desktop\Unity\sf3\Mario-Game-Unity-Adarsh-Verma\MarioTask" t="IncludeRecursive">
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Animations" t="Include">
+          <e p="Question Block" t="Include">
+            <e p="StateMachineBehaviour" t="Include">
+              <e p="QuestionBlock_Deactivated.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Scripts" t="Include">
+          <e p="Brick.cs" t="Include" />
+          <e p="Coin.cs" t="Include" />
+          <e p="FollowingCamera.cs" t="Include" />
+          <e p="Goomba.cs" t="Include" />
+          <e p="MushroomController.cs" t="Include" />
+          <e p="PlayerController.cs" t="Include" />
+          <e p="QuestionBlock.cs" t="Include" />
+          <e p="ScoreManager.cs" t="Include" />
+        </e>
+      </e>
+      <e p="MarioBros.sln" t="IncludeFlat" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Temp\bin" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
