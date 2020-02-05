@@ -59,10 +59,10 @@ public class PlayerController : MonoBehaviour
     private bool takeAwayControll = false; //taking away control so Mario would not stick to the side
     
     // Extra Variables
-    public bool gettingPower = false;
-    public bool isReset = false;
-    public bool IsKeyBoardEnable = true;
-    public bool tunTheFirework = false;
+    private bool gettingPower = false;
+    private bool isReset = false;
+    private bool IsKeyBoardEnable = true;
+    private bool tunTheFirework = false;
     
     private ParticleSystem fireworkParticleSystem;
     
@@ -180,6 +180,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         CheckFlipSpriteOfPlayer();
+        GameObject.FindWithTag("Player").GetComponent<CapsuleCollider2D>().isTrigger = false;
         /*if (movementInput > 0 && !isFacingRight)
         {
             FlipSprite();
@@ -193,7 +194,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (isInvulnerable)
+        if (!isInvulnerable)//if (isInvulnerable)
         {
             invulnerabilityTimer -= Time.deltaTime;
 
@@ -318,14 +319,15 @@ public class PlayerController : MonoBehaviour
             isInvulnerable = true;
             invulnerabilityTimer = invulnerabilityTime;
         }
-        /*else if (!isInvulnerable)
+        /*else if (isInvulnerable)
         {
             playerRigidbody2D.velocity = new Vector2(0, jumpVelocity);
             playerAnimator.SetBool("dead", true);
             playerCapsuleCollider2D.enabled = false;
             isDead = true;
+            print("tell");
         }*/
-        if (GameObject.FindWithTag("Player").transform.position.y < -4f)// if height below -4 then Mario dead
+        if (GameObject.FindWithTag("Player").transform.position.y < -4f || GameObject.FindWithTag("Player").GetComponent<CapsuleCollider2D>().isTrigger == true)// if height below -4 then Mario dead
         {
             playerRigidbody2D.velocity = new Vector2(0, jumpVelocity);
             playerAnimator.SetBool("dead", true);
@@ -343,6 +345,7 @@ public class PlayerController : MonoBehaviour
     public void ResetGame()// Reset the game
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        GameObject.FindWithTag("Player").GetComponent<CapsuleCollider2D>().isTrigger = false;
         isReset = false;
     }
 

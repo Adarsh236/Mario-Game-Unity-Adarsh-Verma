@@ -69,7 +69,11 @@ public class Goomba : MonoBehaviour
                 Stomp(colRb);
             }
             else
+            {
+                GameObject.FindWithTag("Player").GetComponent<CapsuleCollider2D>().isTrigger = true;
                 player.Die();
+            }
+
         }
         if (collision.transform.tag == "Mushroom") //if we touch Mushroom, change direction
         {

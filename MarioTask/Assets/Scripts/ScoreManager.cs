@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -12,6 +13,13 @@ public class ScoreManager : MonoBehaviour
 
     private int goombaKillSpreeCounter = 0;
     private float goombaLastKillTimer = 0;
+    
+    // Extra Variable
+    public Text marioText;
+    public Text coinText;
+    public Text worldText;
+    //public Text timeText;
+    public Text timeText;
 
     void Awake()
     {
@@ -31,7 +39,13 @@ public class ScoreManager : MonoBehaviour
         //if (currentTime <= 0) ; //RESTART
         if (currentTime > 1 && currentTime < 1.5f) FindObjectOfType<PlayerController>().SetReset(true); //RESTART
 
+        // setting text
+        marioText.text = GetScore().ToString("0000000");
+        coinText.text = "x" + GetCoins().ToString("00");
+        worldText.text = "1-1";
+        timeText.text = (System.Math.Round(GetCurrentTime(),0)).ToString();
     }
+    
     ////GETS///////////////////////
     public float GetCurrentTime()
     {
