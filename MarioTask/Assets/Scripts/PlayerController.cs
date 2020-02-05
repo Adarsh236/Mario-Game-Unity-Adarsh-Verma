@@ -57,18 +57,18 @@ public class PlayerController : MonoBehaviour
     private PlayerController instance = null;
 
     private bool takeAwayControll = false; //taking away control so Mario would not stick to the side
-    
+
     // Extra Variables
     private bool gettingPower = false;
     private bool isReset = false;
     private bool IsKeyBoardEnable = true;
     private bool tunTheFirework = false;
-    
+
     private ParticleSystem fireworkParticleSystem;
-    
-    
-    
+
+
     GameObject fireworkGameObject;
+
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
+
         fireworkGameObject = GameObject.Find("Firework");
     }
 
@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
         playerCapsuleCollider2D = GetComponent<CapsuleCollider2D>();
         playerAnimator = GetComponent<Animator>();
         playerSpriteRenderer = GetComponent<SpriteRenderer>();
-        fireworkGameObject.SetActive(false);// turn off fire work
+        fireworkGameObject.SetActive(false); // turn off fire work
     }
 
 
@@ -165,6 +165,7 @@ public class PlayerController : MonoBehaviour
                 playerAnimator.SetFloat("movementSpeed", Mathf.Abs(playerRigidbody2D.velocity.x));
                 playerAnimator.SetBool("touchingGround", isTouchingGround);
             }
+
             GameObject.FindWithTag("InvisiblePlayer").GetComponent<SpriteRenderer>().enabled = false;
             tunTheFirework = true;
         }
@@ -179,22 +180,15 @@ public class PlayerController : MonoBehaviour
                 tunTheFirework = false;
             }
         }
+
         CheckFlipSpriteOfPlayer();
         GameObject.FindWithTag("Player").GetComponent<CapsuleCollider2D>().isTrigger = false;
-        /*if (movementInput > 0 && !isFacingRight)
-        {
-            FlipSprite();
-        }
-        else if (movementInput < 0 && isFacingRight)
-        {
-            FlipSprite();
-        }*/
-    }// FixedUpdate
+    } // FixedUpdate
 
 
     private void Update()
     {
-        if (!isInvulnerable)//if (isInvulnerable)
+        if (!isInvulnerable)
         {
             invulnerabilityTimer -= Time.deltaTime;
 
@@ -230,61 +224,6 @@ public class PlayerController : MonoBehaviour
         {
             takeAwayControll = false; //give back control when it's no longer colliding with anything
         }
-
-        /*public void PowerUp()
-        {
-            if (!poweredUp)
-            {
-                playerAnimator.runtimeAnimatorController = bigMarioAnimatorController as RuntimeAnimatorController;
-                playerCapsuleCollider2D.offset = new Vector2(0, 0.5f);
-                playerCapsuleCollider2D.size = new Vector2(0.9f, 2);
-                poweredUp = true;
-            }
-
-        }
-
-        public void Die()
-        {
-            if (poweredUp && !isDead && !isInvulnerable)
-            {
-                playerAnimator.runtimeAnimatorController = smallMarioAnimatorController as RuntimeAnimatorController;
-                playerCapsuleCollider2D.offset = new Vector2(0, 0f);
-                playerCapsuleCollider2D.size = new Vector2(1, 1);
-                poweredUp = false;
-                isInvulnerable = true;
-                invulnerabilityTimer = invulnerabilityTime;
-            }
-            else if (!isInvulnerable)
-            {
-                playerRigidbody2D.velocity = new Vector2(0, jumpVelocity);
-                playerAnimator.SetBool("dead", true);
-                playerCapsuleCollider2D.enabled = false;
-                isDead = true;
-            }
-
-        }
-
-        void FlipSprite()
-        {
-            isFacingRight = !isFacingRight;
-            Vector3 tempScale = transform.localScale;
-            tempScale.x *= -1;
-            transform.localScale = tempScale;
-        }
-
-        private void CheckIfStuck()
-        {
-            //Taking away users control when player is not touching the ground and not moving to any direction
-            if (!isTouchingGround && playerRigidbody2D.velocity == Vector2.zero)
-                takeAwayControll = true;
-
-            if (takeAwayControll)
-                movementInput = 0;
-
-            //if starts touching ground - give control back
-            if (isTouchingGround)
-                takeAwayControll = false;
-        }*/
     } // Update
 
     public void PowerUp()
@@ -295,10 +234,10 @@ public class PlayerController : MonoBehaviour
             playerCapsuleCollider2D.offset = new Vector2(0, 0.5f);
             playerCapsuleCollider2D.size = new Vector2(0.9f, 2);
             poweredUp = true;
-            Invoke("PoweredDown", 5);// wait for 5 sec then power pown
+            Invoke("PoweredDown", 5); // wait for 5 sec then power pown
         }
     }
-    
+
     public void PoweredDown()
     {
         SetPower(false);
@@ -319,15 +258,10 @@ public class PlayerController : MonoBehaviour
             isInvulnerable = true;
             invulnerabilityTimer = invulnerabilityTime;
         }
-        /*else if (isInvulnerable)
-        {
-            playerRigidbody2D.velocity = new Vector2(0, jumpVelocity);
-            playerAnimator.SetBool("dead", true);
-            playerCapsuleCollider2D.enabled = false;
-            isDead = true;
-            print("tell");
-        }*/
-        if (GameObject.FindWithTag("Player").transform.position.y < -4f || GameObject.FindWithTag("Player").GetComponent<CapsuleCollider2D>().isTrigger == true)// if height below -4 then Mario dead
+
+        if (GameObject.FindWithTag("Player").transform.position.y < -4f ||
+            GameObject.FindWithTag("Player").GetComponent<CapsuleCollider2D>().isTrigger == true
+        ) // if height below -4 then Mario dead
         {
             playerRigidbody2D.velocity = new Vector2(0, jumpVelocity);
             playerAnimator.SetBool("dead", true);
@@ -342,7 +276,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void ResetGame()// Reset the game
+    public void ResetGame() // Reset the game
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         GameObject.FindWithTag("Player").GetComponent<CapsuleCollider2D>().isTrigger = false;
@@ -369,27 +303,29 @@ public class PlayerController : MonoBehaviour
         //if starts touching ground - give control back
         if (isTouchingGround)
             takeAwayControll = false;
-    }// CheckIfStuck
-    
+    } // CheckIfStuck
+
     // My extra methods
     public bool GetPower()
     {
         return gettingPower;
-        
     }
+
     public void SetPower(bool gettingPower)
     {
         this.gettingPower = gettingPower;
     }
+
     public bool GetReset()
     {
         return isReset;
-        
     }
+
     public void SetReset(bool isReset)
     {
         this.isReset = isReset;
     }
+
     void CheckFlipSpriteOfPlayer()
     {
         if (movementInput > 0 && !isFacingRight)

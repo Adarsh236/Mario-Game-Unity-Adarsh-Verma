@@ -18,8 +18,8 @@ public class Brick : MonoBehaviour
         source.PlayOneShot(brickBreak);
         GetComponentInParent<SpriteRenderer>().enabled = false;
         GetComponent<BoxCollider2D>().enabled = false;
-        Destroy(this.gameObject,0.6f);
-        Instantiate(brickBreakParticles, pos, Quaternion.Euler(-90,0,0));
+        Destroy(this.gameObject, 0.6f);
+        Instantiate(brickBreakParticles, pos, Quaternion.Euler(-90, 0, 0));
     }
 
     void Awake()
@@ -53,7 +53,8 @@ public class Brick : MonoBehaviour
     {
         if ((go.transform.position.y + 1.4f < this.transform.position.y))
             return true;
-        if ((go.transform.position.y + 0.4f < this.transform.position.y) && !go.transform.GetComponent<PlayerController>().poweredUp)
+        if ((go.transform.position.y + 0.4f < this.transform.position.y) &&
+            !go.transform.GetComponent<PlayerController>().poweredUp)
             return true;
         return false;
     }

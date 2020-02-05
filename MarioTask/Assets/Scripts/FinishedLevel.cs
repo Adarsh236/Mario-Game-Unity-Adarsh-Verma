@@ -5,7 +5,7 @@ using UnityEngine;
 public class FinishedLevel : MonoBehaviour
 {
     private Animator anim;
-    
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -13,16 +13,14 @@ public class FinishedLevel : MonoBehaviour
 
     private void Update()
     {
-        
         if (GameObject.FindWithTag("Player").transform.position.x > 115)
         {
             anim.SetBool("IsLevelFinished", true);
         }
     }
-    
+
     void MakePlayerInvisible()
     {
         GameObject.FindWithTag("InvisiblePlayer").GetComponent<SpriteRenderer>().enabled = false;
     }
-    
-}// class
+} // class

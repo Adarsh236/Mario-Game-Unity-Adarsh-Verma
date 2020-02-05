@@ -13,11 +13,13 @@ public class ScoreManager : MonoBehaviour
 
     private int goombaKillSpreeCounter = 0;
     private float goombaLastKillTimer = 0;
-    
+
     // Extra Variable
     public Text marioText;
     public Text coinText;
+
     public Text worldText;
+
     //public Text timeText;
     public Text timeText;
 
@@ -43,9 +45,9 @@ public class ScoreManager : MonoBehaviour
         marioText.text = GetScore().ToString("0000000");
         coinText.text = "x" + GetCoins().ToString("00");
         worldText.text = "1-1";
-        timeText.text = (System.Math.Round(GetCurrentTime(),0)).ToString();
+        timeText.text = (System.Math.Round(GetCurrentTime(), 0)).ToString();
     }
-    
+
     ////GETS///////////////////////
     public float GetCurrentTime()
     {
@@ -67,7 +69,7 @@ public class ScoreManager : MonoBehaviour
     {
         if (goombaLastKillTimer > 0.5f) //If Goomba was killed more than 0.5 seconds ago, we don't care about it
             goombaKillSpreeCounter = 0;
-		
+
         score += (100 * (2 * goombaKillSpreeCounter)); //More killing, more score
 
         if (goombaKillSpreeCounter == 0) //Score that we add if no Goomba was killed in the last 0.5 seconds

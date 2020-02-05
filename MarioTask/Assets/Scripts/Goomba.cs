@@ -34,12 +34,14 @@ public class Goomba : MonoBehaviour
         if (Mathf.Abs(transform.position.x - player.transform.position.x) < activationDistance)
             inRange = true;
 
-        if(inRange)
+        if (inRange)
         {
             if (isGoingRight)
-                rig.velocity = Vector2.Lerp(rig.velocity, new Vector2(moveSpeed, Mathf.Clamp(rig.velocity.y, -8, 15)), 0.5f); //go right
+                rig.velocity = Vector2.Lerp(rig.velocity, new Vector2(moveSpeed, Mathf.Clamp(rig.velocity.y, -8, 15)),
+                    0.5f); //go right
             else
-                rig.velocity = Vector2.Lerp(rig.velocity, new Vector2(-moveSpeed, Mathf.Clamp(rig.velocity.y, -8, 15)), 0.5f); //go left
+                rig.velocity = Vector2.Lerp(rig.velocity, new Vector2(-moveSpeed, Mathf.Clamp(rig.velocity.y, -8, 15)),
+                    0.5f); //go left
         }
     }
 
@@ -62,7 +64,7 @@ public class Goomba : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.tag == "Player")
-        {   
+        {
             Rigidbody2D colRb = collision.transform.GetComponent<Rigidbody2D>();
             if (colRb.velocity.y < 0)
             {
@@ -73,20 +75,22 @@ public class Goomba : MonoBehaviour
                 GameObject.FindWithTag("Player").GetComponent<CapsuleCollider2D>().isTrigger = true;
                 player.Die();
             }
-
         }
+
         if (collision.transform.tag == "Mushroom") //if we touch Mushroom, change direction
         {
             Rigidbody2D colRB = collision.transform.GetComponent<Rigidbody2D>();
             if ((colRB.velocity.x >= 0 && rig.velocity.x < 0) || (colRB.velocity.x <= 0 && rig.velocity.x > 0))
-            rig.velocity = new Vector2(0, rig.velocity.y);
+                rig.velocity = new Vector2(0, rig.velocity.y);
             isGoingRight = !isGoingRight;
         }
     }
 
-    private void OnCollisionStay2D(Collision2D collision) //Sometimes there are situations when collision with Tiles or Goomba is constant
+    //Sometimes there are situations when collision with Tiles or Goomba is constant
+    private void OnCollisionStay2D(Collision2D collision)
     {
-        if ((collision.gameObject.tag == "Tiles" || collision.gameObject.tag == "Goomba") && Mathf.Round(rig.velocity.x) == 0f) //if it's no longer going left/right - change direction
+        if ((collision.gameObject.tag == "Tiles" || collision.gameObject.tag == "Goomba") &&
+            Mathf.Round(rig.velocity.x) == 0f) //if it's no longer going left/right - change direction
             isGoingRight = !isGoingRight;
     }
 
