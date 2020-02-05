@@ -16,6 +16,7 @@ TagManager:
   - Starman
   - ScoreManager
   - Tiles
+  - InvisibleBox
   layers:
   - Default
   - TransparentFX

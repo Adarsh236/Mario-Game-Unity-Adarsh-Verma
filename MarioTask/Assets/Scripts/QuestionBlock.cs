@@ -9,15 +9,35 @@ public class QuestionBlock : MonoBehaviour
     public bool isSecret;
 
     private Animator anim;
-
+    
+    public bool isHidden = true;
     private void Awake()
     {
         anim = GetComponentInParent<Animator>();
         if (isSecret) //if it's a secret Question block
             anim.SetBool("IsSecret", true);
+        
+        if (GameObject.FindWithTag("InvisibleBox"))//if it's a invisible Question block
+            GameObject.FindWithTag("InvisibleBox").GetComponent<SpriteRenderer>().enabled = false;
 
     }
 
+    private void Update()// for checking prayer movement
+    {
+        if (FindObjectOfType<PlayerController>().transform.position.y < -1)// dont hide
+        {
+            if (FindObjectOfType<PlayerController>().transform.position.y > -1.2)
+            {
+                GameObject.FindWithTag("InvisibleBox").transform.localScale = new Vector3(1, 1, 1);
+            }
+        }
+        if(GameObject.FindWithTag("InvisibleBox").GetComponent<BoxCollider2D>().isTrigger){// hide it
+            if (FindObjectOfType<PlayerController>().transform.position.y > 0.5)
+            {
+                GameObject.FindWithTag("InvisibleBox").transform.localScale = new Vector3(0, 0, 0);
+            }
+        }
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (timesToBeHit > 0)
@@ -28,6 +48,12 @@ public class QuestionBlock : MonoBehaviour
                 Instantiate(prefabToAppear, transform.parent.transform.position, Quaternion.identity); //instantiate other obj
                 timesToBeHit--;
                 anim.SetTrigger("GotHit"); //hit animation
+                
+                if (collision.otherCollider.tag == ("InvisibleBox"))
+                {
+                    GameObject.FindWithTag("InvisibleBox").GetComponent<SpriteRenderer>().enabled = true;
+                    GameObject.FindWithTag("InvisibleBox").GetComponent<BoxCollider2D>().isTrigger = false;
+                }
             }
         }
 
