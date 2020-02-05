@@ -65,8 +65,7 @@ public class PlayerController : MonoBehaviour
     private bool tunTheFirework = false;
 
     private ParticleSystem fireworkParticleSystem;
-
-
+    
     GameObject fireworkGameObject;
 
     private void Awake()
@@ -94,7 +93,7 @@ public class PlayerController : MonoBehaviour
         playerCapsuleCollider2D = GetComponent<CapsuleCollider2D>();
         playerAnimator = GetComponent<Animator>();
         playerSpriteRenderer = GetComponent<SpriteRenderer>();
-        fireworkGameObject.SetActive(false); // turn off fire work
+        fireworkGameObject.SetActive(false); // turn off fire work when game start
     }
 
 
@@ -108,7 +107,7 @@ public class PlayerController : MonoBehaviour
 
         CheckIfStuck(); //Checks if Mario is trying to walk into the wall and get stuck
 
-        if (GameObject.FindWithTag("Player").transform.position.x < 116f)
+        if (GameObject.FindWithTag("Player").transform.position.x < 116f)// level finished
         {
             if (!isDead)
             {
@@ -171,18 +170,18 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            GameObject.FindWithTag("Player").GetComponent<SpriteRenderer>().enabled = false;
-            if (tunTheFirework == true)
+            GameObject.FindWithTag("Player").GetComponent<SpriteRenderer>().enabled = false;// make player invisible and start animation
+            if (tunTheFirework == true)// start firework
             {
-                GameObject.FindWithTag("InvisiblePlayer").GetComponent<SpriteRenderer>().enabled = true;
-                audioSource.PlayOneShot(firework);
-                fireworkGameObject.SetActive(true);
+                GameObject.FindWithTag("InvisiblePlayer").GetComponent<SpriteRenderer>().enabled = true;// make invisible animation player visible
+                audioSource.PlayOneShot(firework);// start firework audio 
+                fireworkGameObject.SetActive(true);//  make firework activate
                 tunTheFirework = false;
             }
         }
 
-        CheckFlipSpriteOfPlayer();
-        GameObject.FindWithTag("Player").GetComponent<CapsuleCollider2D>().isTrigger = false;
+        CheckFlipSpriteOfPlayer();// make it cleaner
+        GameObject.FindWithTag("Player").GetComponent<CapsuleCollider2D>().isTrigger = false;// player wont die
     } // FixedUpdate
 
 
@@ -199,14 +198,12 @@ public class PlayerController : MonoBehaviour
                 newAlpha = 0.5f;
             }
 
-
             if (invulnerabilityTimer < 0)
             {
                 isInvulnerable = false;
                 newAlpha = 1f;
             }
-
-
+            
             playerSpriteRenderer.color = new Color(playerSpriteRenderer.color.r, playerSpriteRenderer.color.g,
                 playerSpriteRenderer.color.b, newAlpha);
 
@@ -215,11 +212,13 @@ public class PlayerController : MonoBehaviour
                 SceneManager.LoadScene(1);
             }
         }
-
+        
+        // used in other class also  but private modifier didnt allow it
         PowerUp();
         Die();
         CheckIfStuck();
-
+        
+        // no need of modifier it is already private
         void OnCollisionExit2D(Collision2D collision)
         {
             takeAwayControll = false; //give back control when it's no longer colliding with anything
@@ -228,23 +227,23 @@ public class PlayerController : MonoBehaviour
 
     public void PowerUp()
     {
-        if (gettingPower)
+        if (gettingPower)// check if player hit the mushroom
         {
             playerAnimator.runtimeAnimatorController = bigMarioAnimatorController as RuntimeAnimatorController;
             playerCapsuleCollider2D.offset = new Vector2(0, 0.5f);
             playerCapsuleCollider2D.size = new Vector2(0.9f, 2);
             poweredUp = true;
-            Invoke("PoweredDown", 5); // wait for 5 sec then power pown
+            Invoke("PoweredDown", 5); // wait for 5 sec then power down
         }
     }
 
-    public void PoweredDown()
+    public void PoweredDown()// convert to smaller mario
     {
         SetPower(false);
         playerAnimator.runtimeAnimatorController = smallMarioAnimatorController as RuntimeAnimatorController;
         playerCapsuleCollider2D.offset = new Vector2(0, 0f);
         playerCapsuleCollider2D.size = new Vector2(0.74f, 1);
-        poweredUp = false;
+        poweredUp = false;// work like small mario
     }
 
     public void Die()
@@ -261,25 +260,25 @@ public class PlayerController : MonoBehaviour
 
         if (GameObject.FindWithTag("Player").transform.position.y < -4f ||
             GameObject.FindWithTag("Player").GetComponent<CapsuleCollider2D>().isTrigger == true
-        ) // if height below -4 then Mario dead
+        ) // if height below -4 mean fall down or get hit by Goomba then Mario dead
         {
             playerRigidbody2D.velocity = new Vector2(0, jumpVelocity);
             playerAnimator.SetBool("dead", true);
             playerCapsuleCollider2D.enabled = false;
             isDead = true;
-            isReset = true;
+            isReset = true;// restart the game
         }
 
         if (isReset)
         {
-            Invoke("ResetGame", 0.5f);
+            Invoke("ResetGame", 0.5f);// wait before restart
         }
     }
 
     public void ResetGame() // Reset the game
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        GameObject.FindWithTag("Player").GetComponent<CapsuleCollider2D>().isTrigger = false;
+        GameObject.FindWithTag("Player").GetComponent<CapsuleCollider2D>().isTrigger = false;// dont let player die
         isReset = false;
     }
 

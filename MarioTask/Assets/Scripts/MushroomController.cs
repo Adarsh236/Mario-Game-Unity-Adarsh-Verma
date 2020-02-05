@@ -34,7 +34,7 @@ public class MushroomController : MonoBehaviour
     {
         if (collision.transform.tag == "Player")
         {
-            collision.gameObject.GetComponent<PlayerController>().SetPower(true);
+            collision.gameObject.GetComponent<PlayerController>().SetPower(true);// power is up player will transform to bigger mario
             collision.gameObject.GetComponent<PlayerController>().PowerUp();
             scoreManager.Mushroom();
             collision.transform.GetComponent<Rigidbody2D>().velocity -=

@@ -23,6 +23,7 @@
           <e p="PlayerController.cs" t="Include" />
           <e p="QuestionBlock.cs" t="Include" />
           <e p="ScoreManager.cs" t="Include" />
+          <e p="Video.cs" t="Include" />
         </e>
       </e>
       <e p="MarioBros.sln" t="IncludeFlat" />

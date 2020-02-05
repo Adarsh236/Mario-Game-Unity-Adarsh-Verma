@@ -13,13 +13,13 @@ public class FinishedLevel : MonoBehaviour
 
     private void Update()
     {
-        if (GameObject.FindWithTag("Player").transform.position.x > 115)
+        if (GameObject.FindWithTag("Player").transform.position.x > 115)// level finished after x becomes 115
         {
             anim.SetBool("IsLevelFinished", true);
         }
     }
 
-    void MakePlayerInvisible()
+    void MakePlayerInvisible()// hide the Invisible player
     {
         GameObject.FindWithTag("InvisiblePlayer").GetComponent<SpriteRenderer>().enabled = false;
     }

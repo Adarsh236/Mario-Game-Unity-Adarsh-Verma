@@ -72,8 +72,8 @@ public class Goomba : MonoBehaviour
             }
             else
             {
-                GameObject.FindWithTag("Player").GetComponent<CapsuleCollider2D>().isTrigger = true;
-                player.Die();
+                GameObject.FindWithTag("Player").GetComponent<CapsuleCollider2D>().isTrigger = true;// player will die if trigger is true
+                player.Die();// got to the playercontroller and execute die method
             }
         }
 

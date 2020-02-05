@@ -24,20 +24,20 @@ public class QuestionBlock : MonoBehaviour
 
     private void Update() // for checking prayer movement
     {
-        if (FindObjectOfType<PlayerController>().transform.position.y < -1) // dont hide
+        if (FindObjectOfType<PlayerController>().transform.position.y < -1) // find slope is increasing or decreasing 
         {
-            if (FindObjectOfType<PlayerController>().transform.position.y > -1.2)
+            if (FindObjectOfType<PlayerController>().transform.position.y > -1.2)// jumping from ground
             {
-                GameObject.FindWithTag("InvisibleBox").transform.localScale = new Vector3(1, 1, 1);
+                GameObject.FindWithTag("InvisibleBox").transform.localScale = new Vector3(1, 1, 1);// hidden box scale & make it visible
             }
         }
 
-        if (GameObject.FindWithTag("InvisibleBox").GetComponent<BoxCollider2D>().isTrigger)
+        if (GameObject.FindWithTag("InvisibleBox").GetComponent<BoxCollider2D>().isTrigger)// after hitting no need to hide invisible box
         {
             // hide it
             if (FindObjectOfType<PlayerController>().transform.position.y > 0.5)
             {
-                GameObject.FindWithTag("InvisibleBox").transform.localScale = new Vector3(0, 0, 0);
+                GameObject.FindWithTag("InvisibleBox").transform.localScale = new Vector3(0, 0, 0);// hidden box scale & make it invisible
             }
         }
     }
@@ -54,10 +54,10 @@ public class QuestionBlock : MonoBehaviour
                 timesToBeHit--;
                 anim.SetTrigger("GotHit"); //hit animation
 
-                if (collision.otherCollider.tag == ("InvisibleBox"))
+                if (collision.otherCollider.tag == ("InvisibleBox"))// if player touch invisible box
                 {
-                    GameObject.FindWithTag("InvisibleBox").GetComponent<SpriteRenderer>().enabled = true;
-                    GameObject.FindWithTag("InvisibleBox").GetComponent<BoxCollider2D>().isTrigger = false;
+                    GameObject.FindWithTag("InvisibleBox").GetComponent<SpriteRenderer>().enabled = true;// make it visible
+                    GameObject.FindWithTag("InvisibleBox").GetComponent<BoxCollider2D>().isTrigger = false;// dont need to hide anymore
                 }
             }
         }
