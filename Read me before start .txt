@@ -1,0 +1,25 @@
+
+I apologize in case my submission is last and could not able to cover all areas like testing because of my medical issue. 
+
+In short, description, if I would like to describe my experience with this Mario task. 
+
+This task was one of my in an exciting list. where I did not learn only about the Unity editor but Also How to approach a particular problem.
+
+1st task - there was no need for modifier within the private method(Update). also, put nonstop Theam song.
+
+2nd task - With the help of Tilemap. I filled all the missing parts. Animate the outside & castle flag.
+
+3rd task - To creak hidden block I used mathematics slope like when a player goes from bottom to top then slope increase while decrease that was tricky.
+
+4th task - I used different small animation to create the final one. Also, it will execute a player reach that point then firework begins.  that was the hardest one.
+
+5th task - Put UI in ScoreManager which is calculating Score Manager and fixed with camera.
+
+Thank you for you time and please your feedback to make me better
+
+
+Link:
+
+Video Link - https://www.loom.com/share/0539d2150938403bb5a9f54b389bd5c4
+
+Git link- https://github.com/Adarsh236/Mario-Game-Unity-Adarsh-Verma
