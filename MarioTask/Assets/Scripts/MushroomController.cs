@@ -32,6 +32,7 @@ public class MushroomController : MonoBehaviour
     {
         if(collision.transform.tag == "Player")
         {
+            collision.gameObject.GetComponent<PlayerController>().SetPower(true);
             collision.gameObject.GetComponent<PlayerController>().PowerUp();
             scoreManager.Mushroom();
             collision.transform.GetComponent<Rigidbody2D>().velocity -= new Vector2(rig.velocity.x, 0); //When we hit Mario, he gets mushrooms velocity. So workaround is to take it away

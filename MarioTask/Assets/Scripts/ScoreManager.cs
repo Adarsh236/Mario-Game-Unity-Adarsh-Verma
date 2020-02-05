@@ -28,8 +28,8 @@ public class ScoreManager : MonoBehaviour
             UnityEngine.Diagnostics.Utils.ForceCrash(UnityEngine.Diagnostics.ForcedCrashCategory.AccessViolation);
         }
 
-        if (currentTime <= 0) ;
-			//RESTART
+        //if (currentTime <= 0) ; //RESTART
+        if (currentTime > 1 && currentTime < 1.5f) FindObjectOfType<PlayerController>().SetReset(true); //RESTART
 
     }
     ////GETS///////////////////////
