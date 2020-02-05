@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Sounds")] public AudioClip smallJumpSound;
     public AudioClip bigJumpSound;
+    public AudioClip firework;
 
     private AudioSource audioSource;
 
@@ -57,8 +58,17 @@ public class PlayerController : MonoBehaviour
 
     private bool takeAwayControll = false; //taking away control so Mario would not stick to the side
     
+    // Extra Variables
     public bool gettingPower = false;
     public bool isReset = false;
+    public bool IsKeyBoardEnable = true;
+    public bool tunTheFirework = false;
+    
+    private ParticleSystem fireworkParticleSystem;
+    
+    
+    
+    GameObject fireworkGameObject;
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -71,6 +81,8 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
+        fireworkGameObject = GameObject.Find("Firework");
     }
 
     void Start()
@@ -82,6 +94,7 @@ public class PlayerController : MonoBehaviour
         playerCapsuleCollider2D = GetComponent<CapsuleCollider2D>();
         playerAnimator = GetComponent<Animator>();
         playerSpriteRenderer = GetComponent<SpriteRenderer>();
+        fireworkGameObject.SetActive(false);// turn off fire work
     }
 
 
@@ -95,61 +108,78 @@ public class PlayerController : MonoBehaviour
 
         CheckIfStuck(); //Checks if Mario is trying to walk into the wall and get stuck
 
-        if (!isDead)
+        if (GameObject.FindWithTag("Player").transform.position.x < 116f)
         {
-            if ((playerRigidbody2D.velocity.x > 0 && !isFacingRight) ||
-                (playerRigidbody2D.velocity.x < 0 && isFacingRight))
+            if (!isDead)
             {
-                playerAnimator.SetBool("turning", true);
-            }
-            else
-            {
-                playerAnimator.SetBool("turning", false);
-            }
-
-            float movementForceMultiplier = Mathf.Max(maxHorizontalSpeed - Mathf.Abs(playerRigidbody2D.velocity.x), 1);
-
-            playerRigidbody2D.AddForce(new Vector2(movementInput * movementForce * movementForceMultiplier, 0));
-
-            playerRigidbody2D.velocity =
-                new Vector2(Mathf.Clamp(playerRigidbody2D.velocity.x, -maxHorizontalSpeed, maxHorizontalSpeed),
-                    Mathf.Clamp(playerRigidbody2D.velocity.y, -maxVerticalSpeed, maxVerticalSpeed));
-
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                if (isTouchingGround)
+                if ((playerRigidbody2D.velocity.x > 0 && !isFacingRight) ||
+                    (playerRigidbody2D.velocity.x < 0 && isFacingRight))
                 {
-                    //Play Jump sound
-                    if (!poweredUp)
-                        audioSource.PlayOneShot(smallJumpSound);
-                    else
-                        audioSource.PlayOneShot(bigJumpSound);
-
-                    isJumping = true;
-                    playerRigidbody2D.velocity = new Vector2(playerRigidbody2D.velocity.x, jumpVelocity);
-                    jumpTimeCounter = jumpTime;
+                    playerAnimator.SetBool("turning", true);
                 }
-            }
-
-            if (jumpTimeCounter > 0 && isJumping)
-                if (Input.GetKey(KeyCode.Space))
+                else
                 {
-                    jumpTimeCounter -= Time.deltaTime;
+                    playerAnimator.SetBool("turning", false);
+                }
+
+                float movementForceMultiplier =
+                    Mathf.Max(maxHorizontalSpeed - Mathf.Abs(playerRigidbody2D.velocity.x), 1);
+
+                playerRigidbody2D.AddForce(new Vector2(movementInput * movementForce * movementForceMultiplier, 0));
+
+                playerRigidbody2D.velocity =
+                    new Vector2(Mathf.Clamp(playerRigidbody2D.velocity.x, -maxHorizontalSpeed, maxHorizontalSpeed),
+                        Mathf.Clamp(playerRigidbody2D.velocity.y, -maxVerticalSpeed, maxVerticalSpeed));
+
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    if (isTouchingGround)
                     {
+                        //Play Jump sound
+                        if (!poweredUp)
+                            audioSource.PlayOneShot(smallJumpSound);
+                        else
+                            audioSource.PlayOneShot(bigJumpSound);
+
+                        isJumping = true;
                         playerRigidbody2D.velocity = new Vector2(playerRigidbody2D.velocity.x, jumpVelocity);
+                        jumpTimeCounter = jumpTime;
                     }
                 }
 
-            if (Input.GetKeyUp(KeyCode.Space))
-            {
-                isJumping = false;
-                jumpTimeCounter = 0;
+                if (jumpTimeCounter > 0 && isJumping)
+                    if (Input.GetKey(KeyCode.Space))
+                    {
+                        jumpTimeCounter -= Time.deltaTime;
+                        {
+                            playerRigidbody2D.velocity = new Vector2(playerRigidbody2D.velocity.x, jumpVelocity);
+                        }
+                    }
+
+                if (Input.GetKeyUp(KeyCode.Space))
+                {
+                    isJumping = false;
+                    jumpTimeCounter = 0;
+                }
+
+                playerAnimator.SetFloat("movementSpeed", Mathf.Abs(playerRigidbody2D.velocity.x));
+                playerAnimator.SetBool("touchingGround", isTouchingGround);
             }
-
-            playerAnimator.SetFloat("movementSpeed", Mathf.Abs(playerRigidbody2D.velocity.x));
-            playerAnimator.SetBool("touchingGround", isTouchingGround);
+            GameObject.FindWithTag("InvisiblePlayer").GetComponent<SpriteRenderer>().enabled = false;
+            tunTheFirework = true;
         }
-
+        else
+        {
+            GameObject.FindWithTag("Player").GetComponent<SpriteRenderer>().enabled = false;
+            if (tunTheFirework == true)
+            {
+                GameObject.FindWithTag("InvisiblePlayer").GetComponent<SpriteRenderer>().enabled = true;
+                audioSource.PlayOneShot(firework);
+                fireworkGameObject.SetActive(true);
+                tunTheFirework = false;
+            }
+        }
+        CheckFlipSpriteOfPlayer();
         /*if (movementInput > 0 && !isFacingRight)
         {
             FlipSprite();
@@ -158,7 +188,6 @@ public class PlayerController : MonoBehaviour
         {
             FlipSprite();
         }*/
-        CheckFlipSpriteOfPlayer();
     }// FixedUpdate
 
 

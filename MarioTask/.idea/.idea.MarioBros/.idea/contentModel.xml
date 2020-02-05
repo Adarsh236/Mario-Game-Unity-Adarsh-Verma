@@ -16,6 +16,7 @@
         <e p="Scripts" t="Include">
           <e p="Brick.cs" t="Include" />
           <e p="Coin.cs" t="Include" />
+          <e p="FinishedLevel.cs" t="Include" />
           <e p="FollowingCamera.cs" t="Include" />
           <e p="Goomba.cs" t="Include" />
           <e p="MushroomController.cs" t="Include" />

@@ -63,6 +63,7 @@
     <Compile Include="Assets\Animations\Question Block\StateMachineBehaviour\QuestionBlock_Deactivated.cs" />
     <Compile Include="Assets\Scripts\Brick.cs" />
     <Compile Include="Assets\Scripts\Coin.cs" />
+    <Compile Include="Assets\Scripts\FinishedLevel.cs" />
     <Compile Include="Assets\Scripts\FollowingCamera.cs" />
     <Compile Include="Assets\Scripts\Goomba.cs" />
     <Compile Include="Assets\Scripts\MushroomController.cs" />

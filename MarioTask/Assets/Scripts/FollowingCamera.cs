@@ -7,9 +7,20 @@ public class FollowingCamera : MonoBehaviour
 
     public Transform playerTransform;
 
+    private float gameNotFinished= 115f;
+    private float gameFinished = 121.7f;// animation start
+
     void Update()
     {
-        float playerPositionX = playerTransform.position.x;
+        float playerPositionX;
+        if (playerTransform.position.x < gameNotFinished)
+        {
+            playerPositionX = playerTransform.position.x;
+        }
+        else
+        {
+            playerPositionX = gameFinished;// fixed camera
+        }
 
         if (playerPositionX > transform.position.x)
         {
